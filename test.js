@@ -10,8 +10,8 @@ tree.show();
 tree.path('a/b/c').setValue('baz');
 tree.show();
 
-
-tree.getValue('a/b');
-tree.getValue(['a']);
+console.log("getValue testing");
+console.log(tree.getValue('a/b'));
+//console.log(tree.getValue(['a']));
 var tree2 = Treelib({a:{b:{c:'cat'}}});
 console.log(tree2.checkPath('a/b/d'));

@@ -53,7 +53,7 @@ var Treelib = function(tree) {
 	};
 	var getValue_string = function(path) {
 		var list = path.split('/');
-		getValue_array(list.slice(0));	
+		return getValue_array(list.slice(0));	
 	};
 	var getValue_array = function(list) {
 		var branch = tree;
