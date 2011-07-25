@@ -56,6 +56,10 @@ var Treelib = function(tree) {
 		return getValue_array(list.slice(0));	
 	};
 	var getValue_array = function(list) {
+		var result = checkPath_array(list);
+		if (result.validPath.length < list.length) {
+			return undefined
+		}	
 		var branch = tree;
 		for (i = 0; i < list.length; i++) {
 			branch = branch[list[i]];
