@@ -60,10 +60,7 @@ var Treelib = function(tree) {
 		for (i = 0; i < list.length; i++) {
 			branch = branch[list[i]];
 		}
-		console.log("getvalue:");
-		console.log(branch);
-		console.log("tree:" );
-		console.log(tree);
+		return branch;
 	};
 	self.add = function(path) {
 		if (typeof path == 'string') {

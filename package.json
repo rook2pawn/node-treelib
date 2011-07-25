@@ -5,7 +5,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/rook2pawn/node-treelib",
   "repository": {
-    "url": ""
+    "type" : "git",
+    "url": "git://github.com/rook2pawn/node-treelib.git"
   },
   "main": "index.js",
   "dependencies": {},
