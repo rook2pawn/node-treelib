@@ -1,10 +1,24 @@
+// incidentally, does shrubs too :-)
 var Treelib = function(tree) {
 	var self = {};
-	if (tree === undefined) {
+	if (tree === undefined) 
 		tree = {};
-	}
-	var currentStem = {};
+	var currentBranch = {};
 	var config = {};
+		
+	var setCurrentBranch = function(list) {
+		var branch = tree; 
+		var i = 0;
+		for (i = 0; i < list.length; i++) {
+			if (branch[list[i]] !== undefined) {
+				branch = branch[list[i]];
+			} else {
+				break;
+			}
+		}
+		currentBranch.branch = branch;
+		currentBranch.leaf = list[list.length-1];
+	};
 	var checkPath_array = function(list) {
 		var branch = tree; 
 		var depth = 0;
@@ -26,10 +40,6 @@ var Treelib = function(tree) {
 		var list = path.split('/');
 		return checkPath_array(list.slice(0));
 	};
-	// helper function createPath
-	// createPath takes a list and returns a set of nested objects
-	// based on this list.
-		
 	var createPath = function(list,obj) {
 		var newobj = {};
 		if (list.length == 0) {
@@ -43,6 +53,7 @@ var Treelib = function(tree) {
 	var addPath_array = function(list) {
 		var newPath = createPath(list.slice(0).reverse());
 		merge(newPath,tree);	
+		setCurrentBranch(list);
 	};
 	var addPath_string = function(path) {
 		var list = path.split('/');
@@ -76,8 +87,6 @@ var Treelib = function(tree) {
 		merge(obj1,obj2);
 		merge(obj2,obj1);
 	};
-
-
 	self.add = function(path) {
 		if (typeof path == 'string') {
 			addPath_string(path);
@@ -96,7 +105,7 @@ var Treelib = function(tree) {
 		return self;
 	};
 	self.setValue = function(val) {
-		currentStem.branch[currentStem.path] = val;
+		currentBranch.branch[currentBranch.leaf] = val;
 		return self;
 	};
 	self.getValue = function(path) {
