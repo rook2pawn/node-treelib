@@ -11,16 +11,15 @@ var Treelib = function(tree) {
 		var validPath = [];
 		var i = 0;
 		for (i = 0; i < list.length; i++) {
-			if (branch !== undefined) { 
-				validPath.push(list[i]);
-			}
 			if (branch[list[i]] !== undefined) {
+				validPath.push(list[i]);
 				branch = branch[list[i]];
 			} else {
 				break;
 			}
 		}
-		return {depth:validPath.length,validPath:validPath}
+		depth = i -1;
+		return {depth:depth,validPath:validPath}
 	};
 	var checkPath_string = function(path) {
 		var list = path.split('/');
@@ -29,20 +28,37 @@ var Treelib = function(tree) {
 	// helper function createPath
 	// createPath takes a list and returns a set of nested objects
 	// based on this list.
-		
+	
 	var createPath = function(list,obj) {
-		var newobj = {};
-		if (list.length == 0) {
-			return obj;
-		} else if (list.length > 0) {
-			newobj[list[0]] = obj;
-			list.shift();   
-			return createPath(list,newobj);
-		}       
+		console.log(list);
+		obj[list[0]] = {};
+		console.log(obj);
+		if (list.length > 0) 
+		createPath(list.shift(),obj);
 	};
 	var addPath_array = function(list) {
-		var newPath = createPath(list.slice(0).reverse());
-		merge(newPath,tree);	
+		var rootLabel = list[0];
+		console.log("LIST: ");
+		console.log(list);
+		if (tree[rootLabel] === undefined) {
+			tree[rootLabel] = {};
+		}
+		var result = checkPath_array(list);
+		console.log(result);
+		var branch = tree;
+		var i = 0;
+		for (i = 0; i < result.validPath.length; i++) {
+			branch = branch[list[i]];
+		}
+		for (; i < list.length; i++) {
+			console.log("i is " + i);
+			branch[list[i]] = {};
+		}
+		console.log("Branch:");console.log(branch);
+		console.log("SLICE:" );
+		console.log(list.slice(i));
+		currentStem.branch = branch;
+		currentStem.path = list[i];
 	};
 	var addPath_string = function(path) {
 		var list = path.split('/');
@@ -63,21 +79,6 @@ var Treelib = function(tree) {
 		}
 		return branch;
 	};
-	var merge = function (from,to) {
-		Object.keys(from).forEach(function (key) {
-			if ((to !== undefined) && (to[key] !== undefined)) {
-				if (from[key] !== undefined) 
-					merge(from[key], to[key])	
-			} else if (to !== undefined)
-				to[key] = from[key];
-		});
-	};
-	var blend = function(obj1,obj2) {
-		merge(obj1,obj2);
-		merge(obj2,obj1);
-	};
-
-
 	self.add = function(path) {
 		if (typeof path == 'string') {
 			addPath_string(path);
@@ -122,13 +123,10 @@ var Treelib = function(tree) {
 		else if (Array.isArray(path))
 			return checkPath_array(path)
 	};
-	self.show = function() {
+self.show = function() {
 		console.log(tree);
 		return self;
 	};
-	self.tree = function() {
-		return tree;
-	}
 	return self;
 };
 exports = module.exports = Treelib;
