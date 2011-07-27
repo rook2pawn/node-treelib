@@ -59,3 +59,19 @@ exports.testBranching2 = function(test) {
 	
 	test.done();
 };
+
+exports.testSetAndClearValues = function(test) {
+	test.expect(5);
+	tree.clear();
+	tree.path(pathD_string);
+	tree.setValue('meows');
+	test.equal('meows',tree.getValue('2/cat'));
+	test.equal('meows',tree.getValue(['2','cat']));
+	tree.clearValue('2/cat');
+	test.equal(undefined, tree.getValue(['2','cat']));
+	tree.path('2/cat').setValue('karma');
+	test.notEqual(undefined,tree.getValue('2/cat'));
+	test.equal('karma',tree.getValue('2/cat'));
+	// and mix in a path test
+	test.done();
+};

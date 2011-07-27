@@ -67,6 +67,11 @@ Show the tree in the console.
 -------
 Returns the tree itself.
 
+.history()
+----------
+Returns the 50 most recent history of path creation and setValues
+executions.
+
 TESTING
 =======
 
