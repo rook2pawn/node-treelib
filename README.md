@@ -1,5 +1,5 @@
-treelib
-=======
+treelib : create tree's as easy as .path('a/b/c')
+=================================================
 
 	var Treelib = require('treelib');
 	var tree = Treelib();
@@ -8,11 +8,6 @@ treelib
 
 	// creates a nested tree
 	> { a : { b : { c : 'foobar' }}}
-
-treelib is EASY
-===============
-
-	Need I say more?
 
 methods
 =======
@@ -51,4 +46,47 @@ example:
 getValue takes a path in the form of a string or array and returns
 the value there. If the path doesn't exist or there is no value set
 at that path, then it returns undefined
+
+.checkPath(string || array) 
+---------------------------
+example:
+	tree.path('a/b/c');	
+	tree.checkPath('a/b/cauliflower');
+	
+	// returns
+
+	> {depth: 2, validPath: [ 'a', 'b' ] }
+
+checkPath returns how far it could walk down the tree.
+
+.show()
+-------
+Show the tree in the console.
+
+.tree()
+-------
+Returns the tree itself.
+
+TESTING
+=======
+
+testing results from ./test/test.js (nodeunit)
+
+rook@debian:~/node-treelib/test$ nodeunit test.js 
+
+test.js
+✔ testBasics
+✔ testOverwrite
+✔ testBranching
+
+OK: 8 assertions (11ms)
+rook@debian:~/node-treelib/test$ nodeunit test.js 
+
+test.js
+✔ testBasics
+✔ testOverwrite
+✔ testBranching
+✔ testBranching2
+
+OK: 9 assertions (12ms)
 

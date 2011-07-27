@@ -25,7 +25,7 @@ var Treelib = function(tree) {
 		var validPath = [];
 		var i = 0;
 		for (i = 0; i < list.length; i++) {
-			if (branch !== undefined) { 
+			if (branch.hasOwnProperty(list[i])) {
 				validPath.push(list[i]);
 			}
 			if (branch[list[i]] !== undefined) {
@@ -137,6 +137,10 @@ var Treelib = function(tree) {
 	};
 	self.tree = function() {
 		return tree;
+	};
+	self.clear = function() {
+		tree = {};
+		return self;
 	}
 	return self;
 };
