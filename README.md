@@ -42,10 +42,17 @@ example:
 	> {Music:{'The Smiths':{price:'$12.99',SKU:'24142'}}}
 
 .getValue(string || array)
------------
+--------------------------
 getValue takes a path in the form of a string or array and returns
 the value there. If the path doesn't exist or there is no value set
 at that path, then it returns undefined
+
+
+.clearValue(string || array) 
+----------------------------
+clearValue takes a path and clears the value at the end of that path,
+i.e. clears the leaf value.
+
 
 .checkPath(string || array) 
 ---------------------------
