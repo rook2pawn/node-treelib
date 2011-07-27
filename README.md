@@ -12,8 +12,8 @@ treelib : create tree's as easy as .path('a/b/c')
 methods
 =======
 
-.path(string || array) 
-----------------------
+.path(path) 
+-----------
 path takes a string or array to indicate a path, i.e.
 'a/b/c' refers to this path {a : {b : { c : '' }}}
 
@@ -32,8 +32,8 @@ example:
 
 .setValue(val)
 --------------
-setValue sets a value on the current path. Just make sure
-to use .path to set the current Path.
+setValue sets a value on the current path. The current path
+is set after .path is called.
 
 example:
 	
@@ -41,20 +41,19 @@ example:
 
 	> {Music:{'The Smiths':{price:'$12.99',SKU:'24142'}}}
 
-.getValue(string || array)
---------------------------
+.getValue(path)
+---------------
 getValue takes a path in the form of a string or array and returns
 the value there. If the path doesn't exist or there is no value set
 at that path, then it returns undefined
 
 
-.clearValue(string || array) 
+.clearValue(path) 
 ----------------------------
-clearValue takes a path and clears the value at the end of that path,
-i.e. clears the leaf value.
+clearValue takes a path in the form of a string or array and clears the value at the end of that path, i.e. clears the leaf value.
 
 
-.checkPath(string || array) 
+.checkPath(path) 
 ---------------------------
 example:
 	tree.path('a/b/c');	
@@ -64,7 +63,7 @@ example:
 
 	> {depth: 2, validPath: [ 'a', 'b' ] }
 
-checkPath returns how far it could walk down the tree.
+checkPath takes a path in the form of a string or array and returns how far it could walk down the tree.
 
 .show()
 -------
