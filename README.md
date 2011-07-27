@@ -83,21 +83,13 @@ TESTING
 
 testing results from ./test/test.js (nodeunit)
 
-	$ nodeunit test.js 
-
-	test.js
-	✔ testBasics
-	✔ testOverwrite
-	✔ testBranching
-
-	OK: 8 assertions (11ms)
-	rook@debian:~/node-treelib/test$ nodeunit test.js 
+	$ nodeunit *
 
 	test.js
 	✔ testBasics
 	✔ testOverwrite
 	✔ testBranching
 	✔ testBranching2
+	✔ testSetAndClearValues
 
-	OK: 9 assertions (12ms)
-
+	OK: 14 assertions (13ms)
