@@ -86,7 +86,7 @@ var Treelib = function(tree) {
 			return undefined
 		}	
 		var branch = tree;
-		for (i = 0; i < list.length; i++) {
+		for (var i = 0; i < list.length; i++) {
 			branch = branch[list[i]];
 		}
 		return branch;
