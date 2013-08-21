@@ -93,3 +93,10 @@ testing results from ./test/test.js (nodeunit)
 	✔ testSetAndClearValues
 
 	OK: 14 assertions (13ms)
+
+
+
+node-treelib Copyright (c) 2010 David Wee rook2pawn@gmail.com
+
+Free software provided under the MIT License
+http://opensource.org/licenses/mit-license.php
