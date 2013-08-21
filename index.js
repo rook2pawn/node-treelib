@@ -1,14 +1,14 @@
 // incidentally, does shrubs too :-)
 var Treelib = function(tree) {
 	var self = {};
-	if (tree === undefined) 
+	if (tree === undefined)
 		tree = {};
 	var currentBranch = {};
 	var config = {};
-	config.historyWindow = 50;	
+	config.historyWindow = 50;
 	var history = [];
 	var setCurrentBranch = function(list) {
-		var branch = tree; 
+		var branch = tree;
 		var i = 0;
 		for (i = 0; i < list.length; i++) {
 			if (branch[list[i]] !== undefined) {
@@ -21,7 +21,7 @@ var Treelib = function(tree) {
 		currentBranch.leaf = list[list.length-1];
 	};
 	var checkPath_array = function(list) {
-		var branch = tree; 
+		var branch = tree;
 		var depth = 0;
 		var validPath = [];
 		var i = 0;
@@ -35,7 +35,7 @@ var Treelib = function(tree) {
 				break;
 			}
 		}
-		return {depth:validPath.length,validPath:validPath}
+		return {depth:validPath.length,validPath:validPath};
 	};
 	var checkPath_string = function(path) {
 		var list = path.split('/');
@@ -43,7 +43,6 @@ var Treelib = function(tree) {
 	};
 	var deletePath_array = function(list) {
 		var branch = tree;
-		
 	};
 	var createPath = function(list,obj) {
 		var newobj = {};
@@ -51,9 +50,9 @@ var Treelib = function(tree) {
 			return obj;
 		} else if (list.length > 0) {
 			newobj[list[0]] = obj;
-			list.shift();   
+			list.shift();
 			return createPath(list,newobj);
-		}       
+		}
 	};
 	var addHistory = function(obj) {
 		history.push(obj);
@@ -63,8 +62,8 @@ var Treelib = function(tree) {
 	};
 	var addPath_array = function(list) {
 		var newPath = createPath(list.slice(0).reverse());
-		addHistory(newPath);	
-		merge(newPath,tree);	
+		addHistory(newPath);
+		merge(newPath,tree);
 		setCurrentBranch(list);
 	};
 	var addPath_string = function(path) {
@@ -78,15 +77,15 @@ var Treelib = function(tree) {
 	};
 	var getValue_string = function(path) {
 		var list = path.split('/');
-		return getValue_array(list.slice(0));	
+		return getValue_array(list.slice(0));
 	};
 	var getValue_array = function(list) {
 		var result = checkPath_array(list);
 		if (result.validPath.length < list.length) {
-			return undefined
-		}	
+			return undefined;
+		}
 		var branch = tree;
-		for (i = 0; i < list.length; i++) {
+		for (var i = 0; i < list.length; i++) {
 			branch = branch[list[i]];
 		}
 		return branch;
@@ -94,8 +93,8 @@ var Treelib = function(tree) {
 	var merge = function (from,to) {
 		Object.keys(from).forEach(function (key) {
 			if ((to !== undefined) && (to[key] !== undefined)) {
-				if (from[key] !== undefined) 
-					merge(from[key], to[key])	
+				if (from[key] !== undefined)
+					merge(from[key], to[key]);
 			} else if (to !== undefined)
 				to[key] = from[key];
 		});
@@ -109,7 +108,7 @@ var Treelib = function(tree) {
 		clearValue_array(list);
 	};
 	var clearValue_array = function(list) {
-		var result = checkPath_array(list);		
+		var result = checkPath_array(list);
 		var branch = tree;
 		var i = 0;
 		for (i = 0; i < list.length; i++) {
@@ -137,7 +136,7 @@ var Treelib = function(tree) {
 		return self;
 	};
 	self.createPath = function(path,obj) {
-		var obj = {};
+		obj = {};
 		createPath(path.slice(0).reverse(),obj);
 		return self;
 	};
@@ -161,12 +160,12 @@ var Treelib = function(tree) {
 		for (var i in obj) {
 			config[i] = obj[i];
 		}
-	}
+	};
 	self.checkPath = function(path) {
-		if (typeof path == 'string') 
-			return checkPath_string(path)
+		if (typeof path == 'string')
+			return checkPath_string(path);
 		else if (Array.isArray(path))
-			return checkPath_array(path)
+			return checkPath_array(path);
 	};
 	self.show = function() {
 		console.log(tree);
@@ -184,4 +183,4 @@ var Treelib = function(tree) {
 	};
 	return self;
 };
-exports = module.exports = Treelib;
+module.exports = Treelib;
