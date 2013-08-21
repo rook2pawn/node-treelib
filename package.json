@@ -2,7 +2,7 @@
   "author": "David Wee <rook2pawn@gmail.com> (http://rook2pawn.com)",
   "name": "treelib",
   "description": "create trees as simple as path('a/b/c')!",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/rook2pawn/node-treelib",
   "repository": {
     "type" : "git",
