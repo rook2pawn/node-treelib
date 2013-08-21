@@ -1,58 +1,53 @@
 // incidentally, does shrubs too :-)
+var lib = require('./lib');
 var Treelib = function(tree) {
-	var self = {};
+    if (!(this instanceof Treelib)) {
+        return new Treelib(tree);
+    }
 	if (tree === undefined)
-		tree = {};
-	var currentBranch = {};
+		this._tree = {};
+    else 
+        this._tree = tree;
+	this.currentBranch = {};
 	var config = {};
 	config.historyWindow = 50;
 	var history = [];
-	var setCurrentBranch = function(list) {
-		var branch = tree;
-		var i = 0;
-		for (i = 0; i < list.length; i++) {
-			if (branch[list[i]] !== undefined) {
-				branch = branch[list[i]];
-			} else {
-				break;
-			}
-		}
-		currentBranch.branch = branch;
-		currentBranch.leaf = list[list.length-1];
-	};
-	var checkPath_array = function(list) {
-		var branch = tree;
-		var depth = 0;
-		var validPath = [];
-		var i = 0;
-		for (i = 0; i < list.length; i++) {
-			if (branch.hasOwnProperty(list[i])) {
-				validPath.push(list[i]);
-			}
-			if (branch[list[i]] !== undefined) {
-				branch = branch[list[i]];
-			} else {
-				break;
-			}
-		}
-		return {depth:validPath.length,validPath:validPath};
-	};
-	var checkPath_string = function(path) {
+	this.setCurrentBranch = function(list) {
+        var branch = this._tree;
+        var i = 0;
+        for (i = 0; i < list.length; i++) {
+            if (branch[list[i]] !== undefined) {
+                branch = branch[list[i]];
+            } else {
+                break;
+            }
+        }
+        this.currentBranch.branch = branch;
+        this.currentBranch.leaf = list[list.length-1];
+    };
+    this.checkPath_array = function(list) {
+        var branch = this._tree;
+        var depth = 0;
+        var validPath = [];
+        var i = 0;
+        for (i = 0; i < list.length; i++) {
+            if (branch.hasOwnProperty(list[i])) {
+                validPath.push(list[i]);
+            }
+            if (branch[list[i]] !== undefined) {
+                branch = branch[list[i]];
+            } else {
+                break;
+            }
+        }
+        return {depth:validPath.length,validPath:validPath};
+    };
+	this.checkPath_string = function(path) {
 		var list = path.split('/');
-		return checkPath_array(list.slice(0));
+		return this.checkPath_array(list.slice(0));
 	};
 	var deletePath_array = function(list) {
-		var branch = tree;
-	};
-	var createPath = function(list,obj) {
-		var newobj = {};
-		if (list.length == 0) {
-			return obj;
-		} else if (list.length > 0) {
-			newobj[list[0]] = obj;
-			list.shift();
-			return createPath(list,newobj);
-		}
+		var branch = this._tree;
 	};
 	var addHistory = function(obj) {
 		history.push(obj);
@@ -60,56 +55,43 @@ var Treelib = function(tree) {
 			history.shift();
 		}
 	};
-	var addPath_array = function(list) {
-		var newPath = createPath(list.slice(0).reverse());
+	this.addPath_array = function(list) {
+		var newPath = lib.createPath(list.slice(0).reverse());
 		addHistory(newPath);
-		merge(newPath,tree);
-		setCurrentBranch(list);
+		lib.merge(newPath,this._tree);
+		this.setCurrentBranch(list);
 	};
-	var addPath_string = function(path) {
+	this.addPath_string = function(path) {
 		var list = path.split('/');
-		addPath_array(list.slice(0));
+		this.addPath_array(list.slice(0));
 	};
-	var setValue = function(val) {
-		currentBranch.branch[currentBranch.leaf] = val;
-		currentBranch.val = val;
-		addHistory(currentBranch);
-	};
-	var getValue_string = function(path) {
+	this.getValue_string = function(path) {
 		var list = path.split('/');
-		return getValue_array(list.slice(0));
+		return this.getValue_array(list.slice(0));
 	};
-	var getValue_array = function(list) {
-		var result = checkPath_array(list);
+	this.getValue_array = function(list) {
+		var result = this.checkPath_array(list);
+        console.log(result);
 		if (result.validPath.length < list.length) {
 			return undefined;
 		}
-		var branch = tree;
+		var branch = this._tree;
 		for (var i = 0; i < list.length; i++) {
 			branch = branch[list[i]];
 		}
 		return branch;
 	};
-	var merge = function (from,to) {
-		Object.keys(from).forEach(function (key) {
-			if ((to !== undefined) && (to[key] !== undefined)) {
-				if (from[key] !== undefined)
-					merge(from[key], to[key]);
-			} else if (to !== undefined)
-				to[key] = from[key];
-		});
-	};
 	var blend = function(obj1,obj2) {
-		merge(obj1,obj2);
-		merge(obj2,obj1);
+		lib.merge(obj1,obj2);
+		lib.merge(obj2,obj1);
 	};
-	var clearValue_string = function(path) {
+	this.clearValue_string = function(path) {
 		var list = path.split('/');
-		clearValue_array(list);
+		this.clearValue_array(list);
 	};
-	var clearValue_array = function(list) {
-		var result = checkPath_array(list);
-		var branch = tree;
+	this.clearValue_array = function(list) {
+		var result = this.checkPath_array(list);
+		var branch = this._tree;
 		var i = 0;
 		for (i = 0; i < list.length; i++) {
 			if (i < (list.length-1))
@@ -117,70 +99,70 @@ var Treelib = function(tree) {
 		}
 		branch[list[i-1]] = undefined;
 	};
-	self.add = function(path) {
+	this.add = function(path) {
 		if (typeof path == 'string') {
-			addPath_string(path);
+			this.addPath_string(path);
 		}
 		else if (Array.isArray(path)) {
-			addPath_array(path);
+			this.addPath_array(path);
 		}
-		return self;
+		return this;
 	};
-	self.clearValue = function(path) {
+	this.clearValue = function(path) {
 		if (typeof path == 'string') {
-			clearValue_string(path);
+			this.clearValue_string(path);
 		}
 		else if (Array.isArray(path)) {
-			clearValue_array(path);
+			this.clearValue_array(path);
 		}
-		return self;
+		return this;
 	};
-	self.createPath = function(path,obj) {
-		obj = {};
-		createPath(path.slice(0).reverse(),obj);
-		return self;
+	this.setValue = function(val) {
+		this.currentBranch.branch[this.currentBranch.leaf] = val;
+		this.currentBranch.val = val;
+		addHistory(this.currentBranch);
+        return this;
 	};
-	self.setValue = function(val) {
-		setValue(val);
-		return self;
-	};
-	self.getValue = function(path) {
+	this.getValue = function(path) {
 		if (typeof path == 'string') {
-			return getValue_string(path);
+			return this.getValue_string(path);
 		}
 		else if (Array.isArray(path)) {
-			return getValue_array(path);
-		}
+			return this.getValue_array(path);
+		} else if ((path === undefined) && (this.currentBranch.val !== undefined)) {
+            // check to see if we have a current path
+            // and return value from there.
+            return this.currentBranch.val;
+        }
 	};
-	self.path = function (path) {
+	this.path = function (path) {
 		this.add(path);
-		return self;
+		return this;
 	};
-	self.setConfig = function(obj) {
+	this.setConfig = function(obj) {
 		for (var i in obj) {
 			config[i] = obj[i];
 		}
 	};
-	self.checkPath = function(path) {
+	this.checkPath = function(path) {
 		if (typeof path == 'string')
-			return checkPath_string(path);
+			return this.checkPath_string(path);
 		else if (Array.isArray(path))
-			return checkPath_array(path);
+			return this.checkPath_array(path);
 	};
-	self.show = function() {
-		console.log(tree);
-		return self;
+	this.show = function() {
+		console.log(this._tree);
+		return this;
 	};
-	self.tree = function() {
-		return tree;
+	this.tree = function() {
+		return this._tree;
 	};
-	self.clear = function() {
-		tree = {};
-		return self;
+	this.clear = function() {
+		this._tree = {};
+		return this;
 	};
-	self.history = function() {
+	this.history = function() {
 		return history;
 	};
-	return self;
 };
-module.exports = Treelib;
+module.exports = exports = Treelib;
