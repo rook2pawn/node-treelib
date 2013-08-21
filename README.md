@@ -86,6 +86,9 @@ executions.
 TESTING
 =======
 
+to run tests,
+    nodeunit test/
+
 testing results from ./test/test.js (nodeunit)
 
 	$ nodeunit *
