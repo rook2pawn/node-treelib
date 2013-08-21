@@ -4,8 +4,8 @@ tree4.clear();
 tree4.path('2/cat');
 tree4.setValue('meows');
 tree4.show();
+console.log(tree4.getValue());
 console.log(tree4.getValue('2/cat'));
-/*
 tree4.path([2,3,4]);
 tree4.path([2,7,9]);
 tree4.path([4,1,2]);
@@ -27,4 +27,3 @@ tree.path(['black','15']).setValue('pash');
 var list = tree.path(['black','15']).getValue();
 console.log(list);
 tree.show();
-*/

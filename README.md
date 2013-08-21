@@ -44,8 +44,13 @@ example:
 .getValue(path)
 ---------------
 getValue takes a path in the form of a string or array and returns
-the value there. If the path doesn't exist or there is no value set
-at that path, then it returns undefined
+the value there. 
+
+If the path doesn't exist or there is no value set
+at that path, then it returns undefined. 
+
+If getValue is called without arguments, it returns the value at the current path.
+
 
 
 .clearValue(path) 
