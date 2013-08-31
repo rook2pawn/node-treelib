@@ -46,11 +46,14 @@ example:
 getValue takes a path in the form of a string or array and returns
 the value there. 
 
+    tree.getValue('Music/The Smiths'); // {price:'$12.99',SKU:'24142'}
+
 If the path doesn't exist or there is no value set
 at that path, then it returns undefined. 
 
 If getValue is called without arguments, it returns the value at the current path.
 
+    tree.path('Music/The Smiths').getValue(); // {price:'$12.99',SKU:'24142'}
 
 
 .clearValue(path) 
