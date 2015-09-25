@@ -71,7 +71,6 @@ var Treelib = function(tree) {
 	};
 	this.getValue_array = function(list) {
 		var result = this.checkPath_array(list);
-        console.log(result);
 		if (result.validPath.length < list.length) {
 			return undefined;
 		}
