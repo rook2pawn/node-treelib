@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rook2pawn/node-treelib.svg?branch=master)](https://travis-ci.org/rook2pawn/node-treelib)
+
 treelib : create tree's as easy as .path('a/b/c')
 =================================================
 
