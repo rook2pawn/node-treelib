@@ -7,6 +7,11 @@ var Treelib = function(tree) {
 		this._tree = {}
   else 
     this._tree = tree
+  var pathToList = function(path) {
+    if (path.indexOf('/') === 0)
+      path = path.slice(1)
+		return path.split('/')
+  }
 	this.currentBranch = {}
 	this.setCurrentBranch = function(list) {
     var branch = this._tree
@@ -39,7 +44,7 @@ var Treelib = function(tree) {
     return {depth:validPath.length,validPath:validPath}
   }
 	this.checkPath_string = function(path) {
-		var list = path.split('/')
+		var list = pathToList(path)
 		return this.checkPath_array(list.slice(0))
 	}
 	var deletePath_array = function(list) {
@@ -51,13 +56,11 @@ var Treelib = function(tree) {
 		this.setCurrentBranch(list)
 	}
 	this.addPath_string = function(path) {
-    if (path.indexOf('/') === 0)
-      path = path.slice(1)
-		var list = path.split('/')
+    var list = pathToList(path)
 		this.addPath_array(list.slice(0))
 	}
 	this.getValue_string = function(path) {
-		var list = path.split('/')
+		var list = pathToList(path)
 		return this.getValue_array(list.slice(0))
 	}
 	this.getValue_array = function(list) {
@@ -76,7 +79,7 @@ var Treelib = function(tree) {
 		lib.merge(obj2,obj1)
 	}
 	this.clearValue_string = function(path) {
-		var list = path.split('/')
+		var list = pathToList(path)
 		this.clearValue_array(list)
 	}
 	this.clearValue_array = function(list) {
