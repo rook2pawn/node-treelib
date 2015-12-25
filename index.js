@@ -13,26 +13,31 @@ var Treelib = function(tree) {
 		return path.split('/')
   }
 	this.currentBranch = {}
-	this.setCurrentBranch = function(list) {
+	this.setCurrentBranch = function(path) {
+    var list = pathToList(path)
     var branch = this._tree
     var i = 0
     for (i = 0; i < list.length; i++) {
-        if (branch[list[i]] !== undefined) {
-            branch = branch[list[i]]
-        } else {
-            break
-        }
+      var curr = branch[list[i]]
+      if ((curr !== undefined) && (typeof curr =='object')) {
+          branch = curr
+      } else {
+          break
+      }
     }
     this.currentBranch.branch = branch
     this.currentBranch.leaf = list[list.length-1]
   }
-  this.checkPath_array = function(list) {
+  this.checkPath = function(path) {
+		var list = pathToList(path)
     var branch = this._tree
     var depth = 0
     var validPath = []
     var i = 0
+    var hits = 0;
     for (i = 0; i < list.length; i++) {
       if (branch.hasOwnProperty(list[i])) {
+        hits++
         validPath.push(list[i])
       }
       if (branch[list[i]] !== undefined) {
@@ -41,49 +46,33 @@ var Treelib = function(tree) {
         break
       }
     }
-    return {depth:validPath.length,validPath:validPath}
+    var fullPath = (hits === (list.length))
+    return {depth:validPath.length,validPath:validPath,fullPath:fullPath}
   }
-	this.checkPath_string = function(path) {
-		var list = pathToList(path)
-		return this.checkPath_array(list.slice(0))
-	}
-	var deletePath_array = function(list) {
-		var branch = this._tree
-	}
-	this.addPath_array = function(list) {
+	this.addPath = function(path) {
+    var list = pathToList(path)
 		var newPath = lib.createPath(list.slice(0).reverse())
 		lib.merge(newPath,this._tree)
-		this.setCurrentBranch(list)
+		this.setCurrentBranch(path)
 	}
-	this.addPath_string = function(path) {
-    var list = pathToList(path)
-		this.addPath_array(list.slice(0))
-	}
-	this.getValue_string = function(path) {
+  this.getValue = function(path) {
 		var list = pathToList(path)
-		return this.getValue_array(list.slice(0))
-	}
-	this.getValue_array = function(list) {
-		var result = this.checkPath_array(list)
-		if (result.validPath.length < list.length) {
+		var result = this.checkPath(path)
+		if (!result.fullPath)
 			return undefined
-		}
 		var branch = this._tree
 		for (var i = 0; i < list.length; i++) {
 			branch = branch[list[i]]
 		}
 		return branch
-	}
+  }
 	var blend = function(obj1,obj2) {
 		lib.merge(obj1,obj2)
 		lib.merge(obj2,obj1)
 	}
-	this.clearValue_string = function(path) {
+  this.clearValue = function(path) {
 		var list = pathToList(path)
-		this.clearValue_array(list)
-	}
-	this.clearValue_array = function(list) {
-		var result = this.checkPath_array(list)
+		var result = this.checkPath(path)
 		var branch = this._tree
 		var i = 0
 		for (i = 0; i < list.length; i++) {
@@ -91,55 +80,34 @@ var Treelib = function(tree) {
 			branch = branch[list[i]]
 		}
 		branch[list[i-1]] = undefined
-	}
-	this.add = function(path) {
-		if (typeof path == 'string') {
-			this.addPath_string(path)
-		}
-		else if (Array.isArray(path)) {
-			this.addPath_array(path)
-		}
-		return this
-	}
-	this.clearValue = function(path) {
-		if (typeof path == 'string') {
-			this.clearValue_string(path)
-		}
-		else if (Array.isArray(path)) {
-			this.clearValue_array(path)
-		}
-		return this
-	}
+  }
 	this.setValue = function(val) {
 		this.currentBranch.branch[this.currentBranch.leaf] = val
 		this.currentBranch.val = val
     return this
 	}
-	this.getValue = function(path) {
-		if (typeof path == 'string') {
-			return this.getValue_string(path)
-		} else if (Array.isArray(path)) {
-			return this.getValue_array(path)
-		} else if ((path === undefined) && (this.currentBranch.val !== undefined)) {
-      // check to see if we have a current path
-      // and return value from there.
-      return this.currentBranch.val
-    }
-	}
 	this.path = function (path) {
-		this.add(path)
+	  var result = this.checkPath(path)
+    if (!result.fullPath) {
+      this.addPath(path)
+    } else { 
+      this.setCurrentBranch(path)
+    }
 		return this
 	}
+  this.incr = function(path) {
+    this.path(path)
+    var val = this.getValue(path)
+    if (val === undefined)
+      val = 0
+    val++
+    this.setValue(val)
+    return val
+  }
 	this.setConfig = function(obj) {
 		for (var i in obj) {
 			config[i] = obj[i]
 		}
-	}
-	this.checkPath = function(path) {
-		if (typeof path == 'string')
-			return this.checkPath_string(path)
-		else if (Array.isArray(path))
-			return this.checkPath_array(path)
 	}
 	this.show = function() {
 		console.log(this._tree)

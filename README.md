@@ -14,7 +14,11 @@ treelib : create tree's as easy as .path('a/b/c')
 
 .path(path) 
 ===========
-.path creates a path such that 'a/b/c' refers to this path {a : {b : { c : '' }}}
+'a/b/c' creates object {a : {b : { c : undefined }}}
+
+.incr(path)
+===========
+increments a counter at path and returns the counter value
 
 .setValue(val)
 ==============
@@ -30,7 +34,9 @@ the value there.
 If the path doesn't exist or there is no value set
 at that path, then it returns undefined. 
 
-If getValue is called without arguments, it returns the value at the current path.
+.getValue()
+===========
+returns the value at the current path.
 
     tree.path('Music/The Smiths').getValue(); // {price:'$12.99',SKU:'24142'}
 
