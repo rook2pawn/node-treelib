@@ -51,6 +51,8 @@ var Treelib = function(tree) {
 		this.setCurrentBranch(list)
 	}
 	this.addPath_string = function(path) {
+    if (path.indexOf('/') === 0)
+      path = path.slice(1)
 		var list = path.split('/')
 		this.addPath_array(list.slice(0))
 	}
