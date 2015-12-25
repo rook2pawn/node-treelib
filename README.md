@@ -1,13 +1,13 @@
 treelib : create tree's as easy as .path('a/b/c')
 =================================================
 
-	var Treelib = require('treelib');
-	var tree = Treelib();
+    var Treelib = require('treelib');
+    var tree = Treelib();
 
-	tree.path('a/b/c').setValue('foobar');
+    tree.path('a/b/c').setValue('foobar');
 
-	// creates a nested tree
-	> { a : { b : { c : 'foobar' }}}
+    // creates a nested tree
+    > { a : { b : { c : 'foobar' }}}
 
 methods
 =======
@@ -81,33 +81,8 @@ Show the tree in the console.
 -------
 Returns the tree itself.
 
-.history()
-----------
-Returns the 50 most recent history of path creation and setValues
-executions.
 
-TESTING
-=======
-
-to run tests,
-    nodeunit test/
-
-testing results from ./test/test.js (nodeunit)
-
-	$ nodeunit *
-
-	test.js
-	✔ testBasics
-	✔ testOverwrite
-	✔ testBranching
-	✔ testBranching2
-	✔ testSetAndClearValues
-
-	OK: 14 assertions (13ms)
-
-
-
-node-treelib Copyright (c) 2010 David Wee rook2pawn@gmail.com
+node-treelib Copyright (c) 2010-2015 David Wee rook2pawn@gmail.com
 
 Free software provided under the MIT License
 http://opensource.org/licenses/mit-license.php
