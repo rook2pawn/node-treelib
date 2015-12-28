@@ -1,4 +1,5 @@
 var lib = require('./lib')
+var util = require('util')
 var traverse = require('traverse')
 var Treelib = function(tree) {
   if (!(this instanceof Treelib)) {
@@ -113,7 +114,7 @@ var Treelib = function(tree) {
 		}
 	}
 	this.show = function() {
-		console.log(this._tree)
+		console.log(util.inspect(this._tree,{depth:null,colors:true}))
 		return this
 	}
   this.setTree = function(_tree) {
