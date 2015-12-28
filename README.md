@@ -20,6 +20,10 @@ treelib : create tree's as easy as .path('a/b/c')
 ===========
 increments a counter at path and returns the counter value
 
+.leafs()
+========
+returns a list of all leafs 
+
 .setValue(val)
 ==============
 setValue sets a value on the current path. The current path is set after .path is called.

@@ -1,4 +1,5 @@
 var lib = require('./lib')
+var traverse = require('traverse')
 var Treelib = function(tree) {
   if (!(this instanceof Treelib)) {
     return new Treelib(tree)
@@ -87,6 +88,8 @@ var Treelib = function(tree) {
     return this
 	}
 	this.path = function (path) {
+    if (typeof path !== 'string')
+      path = path.join('/')
 	  var result = this.checkPath(path)
     if (!result.fullPath) {
       this.addPath(path)
@@ -123,5 +126,14 @@ var Treelib = function(tree) {
 	this.history = function() {
 		return history
 	}
+  this.leafs = function() { 
+    var leaves = [];
+    traverse(this._tree).forEach(function(obj) {
+      console.log("TRAVERSE:", obj)
+      if ((this.isLeaf) && (typeof obj == 'object'))
+        leaves.push(obj)
+    })
+    return leaves
+  }
 }
 module.exports = exports = Treelib
