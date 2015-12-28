@@ -116,6 +116,9 @@ var Treelib = function(tree) {
 		console.log(this._tree)
 		return this
 	}
+  this.setTree = function(_tree) {
+    this._tree = _tree
+  }
 	this.tree = function() {
 		return this._tree
 	}

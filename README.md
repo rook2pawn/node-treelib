@@ -68,6 +68,10 @@ Show the tree in the console.
 =======
 Returns the tree itself.
 
+.setTree(obj)
+==========
+Sets the tree
+
 
 node-treelib Copyright (c) 2010-2015 David Wee rook2pawn@gmail.com
 
