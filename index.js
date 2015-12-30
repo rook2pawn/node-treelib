@@ -12,11 +12,15 @@ var Treelib = function(tree) {
   var pathToList = function(path) {
     if (path.indexOf('/') === 0)
       path = path.slice(1)
+    console.log("pathToList:", path)
 		return path.split('/')
   }
 	this.currentBranch = {}
 	this.setCurrentBranch = function(path) {
-    var list = pathToList(path)
+    if (!Array.isArray(path))
+      var list = pathToList(path)
+    else 
+      var list = path
     var branch = this._tree
     var i = 0
     for (i = 0; i < list.length; i++) {
@@ -31,7 +35,10 @@ var Treelib = function(tree) {
     this.currentBranch.leaf = list[list.length-1]
   }
   this.checkPath = function(path) {
-		var list = pathToList(path)
+    if (!Array.isArray(path))
+      var list = pathToList(path)
+    else 
+      var list = path
     var branch = this._tree
     var depth = 0
     var validPath = []
@@ -52,13 +59,19 @@ var Treelib = function(tree) {
     return {depth:validPath.length,validPath:validPath,fullPath:fullPath}
   }
 	this.addPath = function(path) {
-    var list = pathToList(path)
+    if (!Array.isArray(path))
+      var list = pathToList(path)
+    else 
+      var list = path
 		var newPath = lib.createPath(list.slice(0).reverse())
 		lib.merge(newPath,this._tree)
 		this.setCurrentBranch(path)
 	}
   this.getValue = function(path) {
-		var list = pathToList(path)
+    if (!Array.isArray(path))
+      var list = pathToList(path)
+    else 
+      var list = path
 		var result = this.checkPath(path)
 		if (!result.fullPath)
 			return undefined
@@ -73,7 +86,10 @@ var Treelib = function(tree) {
 		lib.merge(obj2,obj1)
 	}
   this.clearValue = function(path) {
-		var list = pathToList(path)
+    if (!Array.isArray(path))
+      var list = pathToList(path)
+    else 
+      var list = path
 		var result = this.checkPath(path)
 		var branch = this._tree
 		var i = 0
@@ -89,8 +105,6 @@ var Treelib = function(tree) {
     return this
 	}
 	this.path = function (path) {
-    if (typeof path !== 'string')
-      path = path.join('/')
 	  var result = this.checkPath(path)
     if (!result.fullPath) {
       this.addPath(path)
