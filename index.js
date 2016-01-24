@@ -12,7 +12,6 @@ var Treelib = function(tree) {
   var pathToList = function(path) {
     if (path.indexOf('/') === 0)
       path = path.slice(1)
-    console.log("pathToList:", path)
 		return path.split('/')
   }
 	this.currentBranch = {}
