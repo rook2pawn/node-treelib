@@ -72,6 +72,13 @@ Returns the tree itself.
 ==========
 Sets the tree
 
+Helper Functions
+================
+
+.toDescriptiveTree(tree)
+========================
+Returns a descriptive tree when passed a hierachical tree.
+
 
 node-treelib Copyright (c) 2010-2015 David Wee rook2pawn@gmail.com
 

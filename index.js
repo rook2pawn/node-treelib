@@ -136,6 +136,7 @@ var Treelib = function(tree) {
 	this.tree = function() {
 		return this._tree
 	}
+  this.toDescriptiveTree = lib.toDescriptiveTree
 	this.clear = function() {
 		this._tree = {}
 		return this
