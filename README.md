@@ -38,6 +38,11 @@ the value there.
 If the path doesn't exist or there is no value set
 at that path, then it returns undefined. 
 
+If you want to get the root simply 
+  
+    tree.getValue('/') or tree.getValue('')
+  
+
 .getValue()
 ===========
 returns the value at the current path.

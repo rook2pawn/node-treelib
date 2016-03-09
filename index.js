@@ -9,15 +9,10 @@ var Treelib = function(tree) {
 		this._tree = {}
   else 
     this._tree = tree
-  var pathToList = function(path) {
-    if (path.indexOf('/') === 0)
-      path = path.slice(1)
-		return path.split('/')
-  }
 	this.currentBranch = {}
 	this.setCurrentBranch = function(path) {
     if (!Array.isArray(path))
-      var list = pathToList(path)
+      var list = lib.pathToList(path)
     else 
       var list = path
     var branch = this._tree
@@ -35,7 +30,7 @@ var Treelib = function(tree) {
   }
   this.checkPath = function(path) {
     if (!Array.isArray(path))
-      var list = pathToList(path)
+      var list = lib.pathToList(path)
     else 
       var list = path
     var branch = this._tree
@@ -59,7 +54,7 @@ var Treelib = function(tree) {
   }
 	this.addPath = function(path) {
     if (!Array.isArray(path))
-      var list = pathToList(path)
+      var list = lib.pathToList(path)
     else 
       var list = path
 		var newPath = lib.createPath(list.slice(0).reverse())
@@ -68,7 +63,7 @@ var Treelib = function(tree) {
 	}
   this.getValue = function(path) {
     if (!Array.isArray(path))
-      var list = pathToList(path)
+      var list = lib.pathToList(path)
     else 
       var list = path
 		var result = this.checkPath(path)
@@ -86,7 +81,7 @@ var Treelib = function(tree) {
 	}
   this.clearValue = function(path) {
     if (!Array.isArray(path))
-      var list = pathToList(path)
+      var list = lib.pathToList(path)
     else 
       var list = path
 		var result = this.checkPath(path)
