@@ -1,35 +1,40 @@
 [![Build Status](https://travis-ci.org/rook2pawn/node-treelib.svg?branch=master)](https://travis-ci.org/rook2pawn/node-treelib)
 
-treelib : create tree's as easy as .path('a/b/c')
-=================================================
+# treelib : search and create trees as easy as .path('a/b/c')
 
     var Treelib = require('treelib');
     var tree = Treelib();
 
     tree.path('a/b/c').setValue('foobar');
 
+    var x = tree.getTree();
     // creates a nested tree
-    > { a : { b : { c : 'foobar' }}}
+    > x = { a : { b : { c : 'foobar' }}}
 
+## Main Methods path and search
 
-.path(path) 
-===========
+### .path(path) 
 'a/b/c' creates object {a : {b : { c : undefined }}}
 
-.incr(path)
-===========
+### .search(value)
+Performs a Depth-First-Search for value
+
+## Helper methods
+
+### .incr(path)
+
 increments a counter at path and returns the counter value
 
-.leafs()
-========
+### .leafs()
+
 returns a list of all leafs 
 
-.setValue(val)
-==============
+### .setValue(val)
+
 setValue sets a value on the current path. The current path is set after .path is called.
 
-.getValue(path)
-===============
+### .getValue(path)
+
 getValue takes a path in the form of a string or array and returns
 the value there. 
 
@@ -43,19 +48,17 @@ If you want to get the root simply
     tree.getValue('/') or tree.getValue('')
   
 
-.getValue()
-===========
+### .getValue()
+
 returns the value at the current path.
 
     tree.path('Music/The Smiths').getValue(); // {price:'$12.99',SKU:'24142'}
 
 
-.clearValue(path) 
-=================
+### .clearValue(path) 
 clearValue takes a path in the form of a string or array and clears the value at the end of that path
 
-.checkPath(path) 
-================
+### .checkPath(path) 
 
 checkPath takes a path in the form of a string or array and returns how far it could walk down the tree.
 
@@ -65,27 +68,22 @@ checkPath takes a path in the form of a string or array and returns how far it c
     // {depth: 2, validPath: [ 'a', 'b' ] }
 
 
-.show()
-=======
+### .show()
 Show the tree in the console.
 
-.tree()
-=======
+### .tree()
 Returns the tree itself.
 
-.setTree(obj)
-==========
+### .setTree(obj)
 Sets the tree
 
-Helper Functions
-================
+## Additional Helper Functions
 
-.toDescriptiveTree(tree)
-========================
+### .toDescriptiveTree(tree)
 Returns a descriptive tree when passed a hierachical tree.
 
 
-node-treelib Copyright (c) 2010-2015 David Wee rook2pawn@gmail.com
-
+node-treelib Copyright (c) 2010-2017 David Wee rook2pawn@gmail.com
+MIT
 Free software provided under the MIT License
 http://opensource.org/licenses/mit-license.php
