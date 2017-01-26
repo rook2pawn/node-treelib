@@ -16,8 +16,18 @@
 ### .path(path) 
 'a/b/c' creates object {a : {b : { c : undefined }}}
 
-### .search(match)
-Performs a Depth-First-Search for value. User supplies match function *match* which in turn, will be called on each node it visits
+### .search(match, onFinish)
+Performs a Depth-First-Search for value. 
+Call with match function which in turn, will be called on each node it visits,
+and onFinish which will be called with true or false if the match function succeeds.
+
+
+    tree.search(function(val) {
+      return (val == 'foobar')
+    }, function(isFound) {
+      // isFound == true
+    })  
+
 
 ## Helper methods
 
