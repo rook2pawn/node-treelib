@@ -16,8 +16,8 @@
 ### .path(path) 
 'a/b/c' creates object {a : {b : { c : undefined }}}
 
-### .search(value)
-Performs a Depth-First-Search for value
+### .search(match)
+Performs a Depth-First-Search for value. User supplies match function *match* which in turn, will be called on each node it visits
 
 ## Helper methods
 

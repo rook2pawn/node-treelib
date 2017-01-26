@@ -1,6 +1,9 @@
 var lib = require('./lib');
-var util = require('util')
-var traverse = require('traverse')
+var util = require('util');
+var QL = require('queuelib');
+var Hash = require('hashish');
+var traverse = require('traverse');
+
 var Treelib = function(tree) {
   if (!(this instanceof Treelib)) {
     return new Treelib(tree)
@@ -11,6 +14,42 @@ var Treelib = function(tree) {
     this._tree = tree
 	this.currentBranch = {}
 }
+Treelib.prototype.search = function(matchFn,onFinished) {
+  var tree = Hash(this._tree).clone.end;
+  var stack = [];
+  var visit = function(node) {
+    var isMatch = matchFn(node);
+    if (Object.prototype.toString.call(node) !== '[object Object]') {
+      return isMatch;
+    }
+    if (!node.__discovered) {
+      node.__discovered = true;
+      stack.push(node);
+    }
+    return isMatch
+  }
+  if (visit(tree)) {
+    return true
+  }
+
+  var isMatch = false;
+  while ((stack.length > 0) && (!isMatch)) {
+    var node = stack.pop();
+    var children = Object.keys(node).filter(lib.notDiscovered);
+    var q = new QL;
+    q.forEach(children,function(key,idx,qlib) {
+      if (visit(node[key]) === true) {
+        isMatch = true;
+        qlib.terminate();
+        return
+      } else {
+        qlib.done();
+        return;
+      }
+    })
+  }
+  onFinished(isMatch);
+};
 
 Treelib.prototype.setCurrentBranch = function(path) {
   if (!Array.isArray(path))
@@ -149,9 +188,6 @@ Treelib.prototype.leafs = function() {
   })
   return leaves
 }
-Treelib.prototype.search = function(value) {
-
-};
 module.exports = exports = Treelib
 var blend = function(obj1,obj2) {
   lib.merge(obj1,obj2)
