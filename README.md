@@ -1,93 +1,48 @@
 [![Build Status](https://travis-ci.org/rook2pawn/node-treelib.svg?branch=master)](https://travis-ci.org/rook2pawn/node-treelib)
 
-# treelib : search and create trees as easy as .path('a/b/c')
+# treelib : create trees as easy as .path('a/b/c')
 
-    var Treelib = require('treelib');
-    var tree = Treelib();
-
+    const Treelib = require('treelib');
+    var tree = new Treelib;
     tree.path('a/b/c').setValue('foobar');
 
-    var x = tree.getTree();
-    // creates a nested tree
-    > x = { a : { b : { c : 'foobar' }}}
+    // { a : { b : { c : 'foobar' }}}
 
-## Main Methods path and search
+# about
 
-### .path(path) 
-'a/b/c' creates object {a : {b : { c : undefined }}}
+This provides a simple way to generate trees.
 
-### .search(match, onFinish)
-Performs a Depth-First-Search for value. 
-Call with match function which in turn, will be called on each node it visits,
-and onFinish which will be called with true or false if the match function succeeds.
+# API
 
+### constructor
 
-    tree.search(function(val) {
-      return (val == 'foobar')
-    }, function(isFound) {
-      // isFound == true
-    })  
+#### var tree = new Treelib;
 
+starts a new tree object
 
-## Helper methods
+#### var tree = new Treelib(obj)
 
-### .incr(path)
+starts a new tree object starting with obj
 
-increments a counter at path and returns the counter value
+### .path(string)
 
-### .setValue(val)
+takes in a string such as "a/b/c"
 
-setValue sets a value on the current path. The current path is set after .path is called.
+### .pathList(array)
 
-### .getValue(path)
+takes in an array such as ["a", "b", "c"]
 
-getValue takes a path in the form of a string or array and returns
-the value there. 
+### .get()
 
-    tree.getValue('Music/The Smiths'); // {price:'$12.99',SKU:'24142'}
+returns the tree
 
-If the path doesn't exist or there is no value set
-at that path, then it returns undefined. 
+### .setValue(value)
 
-If you want to get the root simply 
-  
-    tree.getValue('/') or tree.getValue('')
-  
+sets value at current branch
 
-### .getValue()
+## and that's it!
 
-returns the value at the current path.
-
-    tree.path('Music/The Smiths').getValue(); // {price:'$12.99',SKU:'24142'}
-
-
-### .clearValue(path) 
-clearValue takes a path in the form of a string or array and clears the value at the end of that path
-
-### .checkPath(path) 
-
-checkPath takes a path in the form of a string or array and returns how far it could walk down the tree.
-
-    tree.path('a/b/c');	
-    tree.checkPath('a/b/cauliflower');
-    
-    // {depth: 2, validPath: [ 'a', 'b' ] }
-
-
-### .show()
-Show the tree in the console.
-
-### .tree()
-Returns the tree itself.
-
-### .setTree(obj)
-Sets the tree
-
-## Additional Helper Functions
-
-### .toDescriptiveTree(tree)
-Returns a descriptive tree when passed a hierachical tree.
-
+### license
 
 node-treelib Copyright (c) 2010-2017 David Wee rook2pawn@gmail.com
 MIT
