@@ -14,13 +14,11 @@ This provides a simple way to generate trees.
 
 # API
 
-### constructor
-
-#### var tree = new Treelib;
+### var tree = new Treelib;
 
 starts a new tree object
 
-#### var tree = new Treelib(obj)
+### var tree = new Treelib(obj)
 
 starts a new tree object starting with obj
 
