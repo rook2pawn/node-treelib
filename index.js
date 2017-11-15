@@ -9,40 +9,68 @@ const Treelib = function(tree) {
 	this.currentBranch = {};
 };
 
-Treelib.prototype.setCurrentBranch = function(list) {
+Treelib.prototype.getValue = function(path) {
 
+  let list = path.split('/');
   var branch = this.tree
   for (var i = 0; i < list.length; i++) {
-    var curr = branch[list[i]]
-    if ((curr !== undefined) && (typeof curr =='object')) {
-        branch = curr
-    } else {
-        break
-    }
+    branch = branch[list[i]]
   }
-  this.currentBranch.branch = branch;
-  this.currentBranch.leaf = list[list.length-1];
-};
+  return branch;
+}
 
-Treelib.prototype.addPath = function(path) {
-  let list = path.split('/');
+Treelib.prototype.addPath = function(list) {
+
 	let newPath = lib.createPath(list, {}, list.length)
 	lib.merge(newPath,this.tree)
-	this.setCurrentBranch(path)
+};
+
+Treelib.prototype.addPathAndSetValue = function(list,value) {
+
+  let newPath = lib.createPath(list, value, list.length)
+  lib.merge(newPath,this.tree)
+};
+
+Treelib.prototype.setCurrentBranch = function(list) {
+
+  let curr = this.tree;
+  for (var i=0; i < list.length-1;i++) {
+    curr = curr[list[i]];
+  }
+  this.currentBranch.branch = curr;
+  this.currentBranch.key = list[list.length-1];
+  return this
 };
 
 Treelib.prototype.setValue = function(val) {
 
-	this.currentBranch.branch[this.currentBranch.leaf] = val
-	this.currentBranch.val = val
+  this.currentBranch.branch[this.currentBranch.key] = val;
   return this
-}
+};
+
 Treelib.prototype.path = function (path) {
 
-  this.addPath(path);
-  this.setCurrentBranch(path)
+  let list = path.split('/');
+  this.addPath(list);
+  this.setCurrentBranch(list);
 	return this
 };
+
+Treelib.prototype.pathAndSetValue = function (path,value) {
+
+  let list = path.split('/');
+  this.addPathAndSetValue(list,value);
+  this.setCurrentBranch(list);
+  return this
+};
+
+Treelib.prototype.pathListAndSetValue = function (list,value) {
+
+  this.addPathAndSetValue(list,value);
+  this.setCurrentBranch(list);
+  return this
+};
+
 
 Treelib.prototype.get = function() {
 	return this.tree

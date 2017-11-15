@@ -32,6 +32,18 @@ takes in a string such as "a/b/c"
 
 takes in an array such as ["a", "b", "c"]
 
+### .pathAndSetValue(string,value)
+
+takes in a string and sets a value there
+
+	.pathAndSetValue("a/b/c", "hello");
+	// { a : { b : { c : "hello" } } }
+
+### .pathListAndSetArray(array, value)
+
+	.pathListAndSetValue(["a", "b", "c"], "hello");
+	// { a : { b : { c : "hello" } } }
+
 ### .get()
 
 returns the tree
