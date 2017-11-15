@@ -30,7 +30,15 @@ test('getValue', function (t) {
   var pathA = 'a/b/c';
   t.plan(1);
   tree.path(pathA);
-  t.deepEqual(tree.getValue('a/b/d'), 'hello')
+  t.equal(tree.getValue('a/b/d'), 'hello')
+});
+
+test('getListValue', function (t) {
+  var tree = new Treelib({ a : { b : { d : 'hello'}}});
+  var pathA = 'a/b/c';
+  t.plan(1);
+  tree.path(pathA);
+  t.equal(tree.getListValue(["a","b","d"]), 'hello');
 });
 
 

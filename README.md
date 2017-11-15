@@ -42,6 +42,20 @@ takes in a string and sets a value there
 	.pathListAndSetValue(["a", "b", "c"], "hello");
 	// { a : { b : { c : "hello" } } }
 
+### .getValue(string)
+
+takes in a string and returns value there
+
+    .getValue('a/b/c')
+    // returns "hello"
+
+### .getListValue(list)
+
+takes in a list and returns value there
+
+    .getListValue(["a","b","c"])
+    // returns "hello"
+
 ### .get()
 
 returns the tree

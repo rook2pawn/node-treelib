@@ -19,6 +19,15 @@ Treelib.prototype.getValue = function(path) {
   return branch;
 }
 
+Treelib.prototype.getListValue = function(list) {
+
+  var branch = this.tree
+  for (var i = 0; i < list.length; i++) {
+    branch = branch[list[i]]
+  }
+  return branch;
+}
+
 Treelib.prototype.addPath = function(list) {
 
 	let newPath = lib.createPath(list, {}, list.length)
